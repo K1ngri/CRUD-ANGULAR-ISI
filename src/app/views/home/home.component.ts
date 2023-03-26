@@ -11,16 +11,6 @@ export interface infoproduct {
 }
 
 const ELEMENT_DATA: infoproduct[] = [
-  {tipo: 'sad', modelo: 'Hydrogen', preco: 1.0079, quantidade: 10, },
-  {tipo: 'sad', modelo: 'Helium', preco: 4.0026, quantidade: 10},
-  {tipo: 'sad', modelo: 'Lithium', preco: 6.941, quantidade: 10},
-  {tipo: 'sad', modelo: 'Beryllium', preco: 9.0122, quantidade: 10},
-  {tipo: 'sad', modelo: 'Boron', preco: 10.811, quantidade: 10},
-  {tipo: 'sad', modelo: 'Carbon', preco: 12.0107, quantidade: 10},
-  {tipo: 'sad', modelo: 'Nitrogen', preco: 14.0067, quantidade: 10},
-  {tipo: 'sad', modelo: 'Oxygen', preco: 15.9994, quantidade: 10},
-  {tipo: 'sad', modelo: 'Fluorine', preco: 18.9984, quantidade: 10},
-  {tipo: 'sad', modelo: 'Neon', preco: 20.1797, quantidade: 10},
 ];
 
 @Component({
@@ -39,26 +29,24 @@ export class HomeComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  openDialog(element: infoproduct | null): void{
+  openDialog(element: infoproduct | null): void {
     const dialogRef = this.dialog.open(FormModalComponent, {
       width: '250px',
-      data: element === null ? {
+      data: element == null ? {
         tipo: '',
         modelo: '',
         preco: null,
         quantidade: null
-      }: {
-        tipo: element.tipo,
-        modelo: element.modelo,
-        preco: element.preco,
-        quantidade: element.quantidade
+      } : {
+        ...element
       }
     });
-
+  
     dialogRef.afterClosed().subscribe(result => {
       if(result !== undefined){
         if(this.dataSource.map(p => p.modelo).includes(result.modelo)){
-          this.dataSource[result.modelo -1] = result;
+          const index = this.dataSource.findIndex(p => p.modelo === result.modelo);
+          this.dataSource[index] = result;
           this.table.renderRows();
         } else {
           this.dataSource.push(result);
