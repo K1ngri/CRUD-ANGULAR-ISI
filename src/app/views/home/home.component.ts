@@ -8,6 +8,7 @@ export interface infoproduct {
   modelo: string;
   preco: number;
   quantidade: number;
+  imagem: string;
 }
 
 const ELEMENT_DATA: infoproduct[] = [
@@ -19,7 +20,7 @@ const ELEMENT_DATA: infoproduct[] = [
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit {
-  displayedColumns: string[] = ['tipo', 'modelo', 'preco', 'quantidade','acao'];
+  displayedColumns: string[] = ['tipo', 'modelo', 'preco', 'quantidade','imagem','acao'];
   dataSource = ELEMENT_DATA;
   @ViewChild(MatTable)
   table!: MatTable<any>;
@@ -36,7 +37,8 @@ export class HomeComponent implements OnInit {
         tipo: '',
         modelo: '',
         preco: null,
-        quantidade: null
+        quantidade: null,
+        imagem: ''
       } : {
         ...element
       }
